@@ -1,0 +1,78 @@
+﻿<!--Set Cluster Variables-->
+
+<Cluster>
+  <!--Set the subscription-->
+  <SubscriptionName>MTC Workshop</SubscriptionName>
+  
+  <!--Affinity Group Settings-->
+  <!--affinityGroupLocation is the location where the cluster will deploy. East US, West US, East Asia, Southeast Asia, North Europe, West Europe are examples of valid locations-->
+  <!--affinityGroupName must be globally unique-->
+  <affinityGroupLocation>West US</affinityGroupLocation>
+  <affinityGroupName>ddptest3</affinityGroupName>
+  <affinityGroupDescription>Affinity Group DDP Sample</affinityGroupDescription>
+  <affinityGroupLabel>AG for DDP Sample</affinityGroupLabel>
+
+  <!--Virtual Network Settings-->
+  <!--If the virtual network already exists, input the vnet settings -->
+  <!--If the virtual networ doesn't exist, the scripts will generate the vnet based on the settings -->
+  <!--Valid address space settings include 192.168.0.0, 10.0.0.0 and 172.16.0.0 -->
+  <!--Network faq is here http://msdn.microsoft.com/en-us/library/windowsazure/dn133803.aspx -->
+  <virtualNetworkName>ddptestv4</virtualNetworkName>
+  <virtualNetworkAddressSpace>172.16.0.0</virtualNetworkAddressSpace>
+  <virtualNetworkCIDR>17</virtualNetworkCIDR>
+  <virtualSubnetname>App</virtualSubnetname>
+  <subnetAddressSpace>172.16.0.0</subnetAddressSpace>
+  <subnetCIDR>17</subnetCIDR>
+
+  <!--Storage Account Settings-->
+  <!--All storage account names must be globally unique-->
+  <storageAccountName>ddptest3</storageAccountName>
+  <storageAccountList>
+    <Name>ddptest31</Name>
+    <Name>ddptest32</Name>
+  </storageAccountList>
+  
+  <!--Virtual Machine Settings-->
+  <!--cloudServicePrefix must be globally unique-->
+  <adminUserName>clusteradmin</adminUserName>
+  <adminPassword>Password.1</adminPassword>
+  <vmNamePrefix>ddptest3a</vmNamePrefix>
+  <cloudServicePrefix>ddptest3</cloudServicePrefix>
+
+  <!--do not change the hosts/hostscript names-->
+  <hostsfile>.\hosts.txt</hostsfile>
+  <hostscript>.\hostscript.sh</hostscript>
+
+  <!--Set Management Node Variables-->
+  <ManagementNode>
+    <galleryimageName>OpenLogic</galleryimageName>
+    <instanceSize>A7</instanceSize>
+    <diskSizeInGB>100</diskSizeInGB>
+    <numOfDisks>2</numOfDisks>
+    <installerPort>8080</installerPort>
+  </ManagementNode>
+  
+  <!--Set Clone Node Variable-->
+  <CloneNode>
+    <galleryimageName>OpenLogic</galleryimageName>
+    <instanceSize>A7</instanceSize>
+  </CloneNode>
+  
+  <!--Set Clone Image Variables-->
+  <CloneImage>
+    <vmName>ddptest3ac</vmName>
+    <cloneimageName>ddptest3c</cloneimageName>
+    <cloneimageLabel>Test 0 Clone</cloneimageLabel>
+  </CloneImage>
+  
+  <!--Set Cluster Nodes Variables-->
+  <ClusterNodes>
+    <instanceSize>A7</instanceSize>
+    <diskSizeInGB>100</diskSizeInGB>
+    <numOfDisks>4</numOfDisks>
+    <vmNamePrefix>ddptest3</vmNamePrefix>
+    <cloudServicePrefix>ddptest3</cloudServicePrefix>
+    <numNodes>8</numNodes>
+    <numCloudServices>2</numCloudServices>
+  </ClusterNodes>
+</Cluster>

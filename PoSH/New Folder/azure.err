@@ -1,0 +1,13 @@
+Sat Jun 28 2014 15:18:21 GMT-0500 (Central Daylight Time):
+[Error: Missing attribute value]
+Error: Missing attribute value
+    at XMLFragment.attribute (C:\Program Files (x86)\Microsoft SDKs\Windows Azure\CLI\node_modules\xmlbuilder\lib\XMLFragment.js:268:15)
+    at C:\Program Files (x86)\Microsoft SDKs\Windows Azure\CLI\node_modules\azure\node_modules\azure-mgmt\lib\models\servicemanagementserialize.js:540:35
+    at Array.forEach (native)
+    at ServiceManagementSerialize.buildNetworkConfiguration (C:\Program Files (x86)\Microsoft SDKs\Windows Azure\CLI\node_modules\azure\node_modules\azure-mgmt\lib\models\servicemanagementserialize.js:536:38)
+    at Object.ServiceManagementService.setNetworkConfig (C:\Program Files (x86)\Microsoft SDKs\Windows Azure\CLI\node_modules\azure\node_modules\azure-mgmt\lib\servicemanagementservice.js:2114:32)
+    at Object.exports.doServiceManagementOperation (C:\Program Files (x86)\Microsoft SDKs\Windows Azure\CLI\lib\util\utils.js:218:22)
+    at setNetworkConfig (C:\Program Files (x86)\Microsoft SDKs\Windows Azure\CLI\lib\commands\asm\network.js:1029:11)
+    at __$createVNet (C:\Program Files (x86)\Microsoft SDKs\Windows Azure\CLI\lib\commands\asm\network.js:791:30)
+    at __tryCatch (C:\Program Files (x86)\Microsoft SDKs\Windows Azure\CLI\node_modules\streamline\lib\callbacks\runtime.js:141:4)
+    at ___ (C:\Program Files (x86)\Microsoft SDKs\Windows Azure\CLI\lib\commands\asm\network.js:789:141)

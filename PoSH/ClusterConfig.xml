@@ -1,0 +1,85 @@
+﻿<!--Set Cluster Variables-->
+<Cluster>
+  <!--Set the subscription-->
+  <SubscriptionName></SubscriptionName>
+
+  <!--Affinity Group Settings-->
+  <!--affinityGroupLocation is the location where the cluster will deploy. East US, West US, East Asia, Southeast Asia, North Europ, West Europe are examples of valid locations-->
+  <!--affinityGroupName must be globally unique-->
+  <affinityGroupLocation></affinityGroupLocation>
+  <affinityGroupName></affinityGroupName>
+  <affinityGroupDescription></affinityGroupDescription>
+  <affinityGroupLabel></affinityGroupLabel>
+
+  <!--Virtual Network Settings-->
+  <!--If the virtual network already exists, input the vnet settings -->
+  <!--If the virtual networ doesn't exist, the scripts will generate the vnet based on the settings -->
+  <!--Valid address space settings include 192.168.0.0, 10.0.0.0 and 172.16.0.0 -->
+  <!--Network faq is here http://msdn.microsoft.com/en-us/library/windowsazure/dn133803.aspx -->
+  <virtualNetworkName></virtualNetworkName>
+  <virtualNetworkAddressSpace></virtualNetworkAddressSpace>
+  <virtualNetworkCIDR></virtualNetworkCIDR>
+  <virtualSubnetname></virtualSubnetname>
+  <subnetAddressSpace></subnetAddressSpace>
+  <subnetCIDR></subnetCIDR>
+
+  <!--Storage Account Settings-->
+  <!--All storage account names must be globally unique-->
+  <!--Names must be in lower case-->
+  <storageAccountName></storageAccountName>
+  <storageAccountList>
+    <Name></Name>
+    <Name></Name>
+  </storageAccountList>
+  
+  <!--Virtual Machine Settings-->
+  <!--cloudServicePrefix must be globally unique-->
+  <adminUserName></adminUserName>
+  <adminPassword></adminPassword>
+  <vmNamePrefix></vmNamePrefix>
+  <cloudServicePrefix></cloudServicePrefix>
+
+  <!--do not change the hosts/hostscript names-->
+  <hostsfile>.\hosts.txt</hostsfile>
+  <hostscript>.\hostscript.sh</hostscript>
+
+  <!--Set Management Node Variables-->
+  <!--Set the galleryimagename to search on the image label. For example, OpenLogic in the galleryimagename will return the latest OpenLogic version of the CentOS image.-->
+  <!--Valid instanceSize settings are available online: http://msdn.microsoft.com/en-us/library/azure/dn197896.aspx.  
+  Most distributed data platform software will require a minimum virtual machine size of ExtraLarge.-->
+  <!--InstallerPort is the endpoint to open for the OSS software.  For example, this may be 8080 for Ambari.-->
+  <ManagementNode>
+    <galleryimageName></galleryimageName>
+    <instanceSize></instanceSize>
+    <diskSizeInGB></diskSizeInGB>
+    <numOfDisks></numOfDisks>
+    <installerPort></installerPort>
+  </ManagementNode>
+  
+  <!--Set Clone Node Variable-->
+  <CloneNode>
+    <galleryimageName></galleryimageName>
+    <instanceSize></instanceSize>
+  </CloneNode>
+  
+  <!--Set Clone Image Variables-->
+  <!--Set the name and label of the Clone Image. -->
+  <CloneImage>
+    <cloneimageName></cloneimageName>
+    <cloneimageLabel></cloneimageLabel>
+  </CloneImage>
+  
+  <!--Set Cluster Nodes Variables-->
+  <!--numNodes is the total number of nodes to generate. This includes all nodes in the data cluster (except for the management node)-->
+  <!--Valid instanceSize settings are available online: http://msdn.microsoft.com/en-us/library/azure/dn197896.aspx.  
+  Most distributed data platform software will require a minimum virtual machine size of ExtraLarge.-->
+  <ClusterNodes>
+    <instanceSize></instanceSize>
+    <diskSizeInGB></diskSizeInGB>
+    <numOfDisks></numOfDisks>
+    <vmNamePrefix></vmNamePrefix>
+    <cloudServicePrefix></cloudServicePrefix>
+    <numNodes></numNodes>
+    <numCloudServices></numCloudServices>
+  </ClusterNodes>
+</Cluster>
