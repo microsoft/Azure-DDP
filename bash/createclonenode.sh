@@ -48,7 +48,7 @@ if [[ -z $result ]]; then
 
         printf "Virtual machine $vnName does not exist. Creating ...\n" 
 	#create the vm and attach data disks
-	(azure vm create --connect --vm-size $instanceSize --vm-name $vmName --ssh 22 --virtual-network-name $vnetName --subnet-names $subnetName $dnsName $galleryimageName $adminUserName $adminPassword) || { echo "Failed to create vm $vmName"; exit 1;}
+	(azure vm create --connect --vm-size $instanceSize --vm-name $vmName --ssh 23 --virtual-network-name $vnetName --subnet-names $subnetName $dnsName $galleryimageName $adminUserName $adminPassword) || { echo "Failed to create vm $vmName"; exit 1;}
 else
 	printf "Virtual machine $vmName exists\n"
 fi
