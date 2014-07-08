@@ -85,7 +85,6 @@ param(
 $subscriptionInfo = Get-AzureSubscription -SubscriptionName $subscriptionName
 $subName = $subscriptionInfo | %{ $_.SubscriptionName }
 
-Set-AzureSubscription -SubscriptionName $subName –CurrentStorageAccount $storageAccountName
 Select-AzureSubscription -SubscriptionName $subName -Current
 
 ###########################################################################################################
