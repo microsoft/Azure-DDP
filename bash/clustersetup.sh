@@ -1,5 +1,9 @@
 #This settings file stores all the settings related to CDH cluster you are setting up
 
+#########Start Subscription Settings
+#Subscription name
+export subscriptionName=""
+
 #########Start Cluster Settings
 #Affinty group helps you keep your storage and compute in the same region
 #Identify the region where affinity group should be created. 

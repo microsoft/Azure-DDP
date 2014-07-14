@@ -28,6 +28,12 @@ fi
 (which jq) || { echo "jq json processor is not available"; exit 1; } 
 
 ##############################################################
+## Set the account subscription
+##############################################################
+printf "Update default subscription settings"
+azure account set $subscriptionName
+
+##############################################################
 ## Create affinity group if it does not exist
 ##############################################################
 printf "affinty group name is %s, affinity group location is %s\n" "$affinityGroupName" "$affinityGroupLocation"
@@ -55,6 +61,9 @@ else
 	echo "Storage account $storageAccountName exists"
 fi
 
+#set the new storage account as the default
+azure config set defaultStorageAccount "$storageAccountName"
+
 #show the storage account details
 printf "######################################## Storage Account Details #######################################\n"
 azure storage account show "$storageAccountName" --json
@@ -73,7 +82,7 @@ fi
 done
 
 ##############################################################
-## Create virtual network if it does not exist
+## Validate the virtual network exists
 ##############################################################
 printf "virtual network is %s, subnet is %s\n" "$vnetName" "$subnetName"
 
