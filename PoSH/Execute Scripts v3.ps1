@@ -49,7 +49,7 @@ or press F8.
     -virtualSubnetname $ddpconfig.Cluster.virtualSubnetname `
     -subnetAddressSpace $ddpconfig.Cluster.SubnetAddressSpace `
     -subnetCIDR $ddpconfig.Cluster.SubnetCIDR `
-    -installerPort 7180 `
+    -installerPort $ddpconfig.Cluster.ManagementNode.installerPort `
     -hostscript $ddpconfig.Cluster.hostscript `
     -hostsfile $ddpconfig.Cluster.hostsfile `
     -subscriptionName $ddpconfig.Cluster.SubscriptionName
