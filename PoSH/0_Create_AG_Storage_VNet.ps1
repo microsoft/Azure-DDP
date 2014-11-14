@@ -147,7 +147,7 @@ Write-Progress "Waiting for storage account creation jobs to finish..." -Complet
 ###########################################################################################################
 ## Create the Virtual Network
 ###########################################################################################################
-azure account set $subscriptionName
+#azure account set $subscriptionName
 
 if ((Get-AzureVnetSite | where {$_.Name -eq $virtualNetworkName}) -eq $NULL) 
 {

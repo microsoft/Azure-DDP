@@ -2,7 +2,7 @@
 #################################################################################
 ## Script Path and PowerShell Modules
 #################################################################################
-$PATH_TO_SCRIPTS = “C:\Users\larar\Source\Workspaces\Distributed Data Cluster on Azure\GitHubScripts\PoSH\New Folder”
+$PATH_TO_SCRIPTS = “<Path to scripts>”
 If (!(Test-Path $PATH_TO_SCRIPTS))
 {
     Write-Host "Path $PATH_TO_SCRIPTS does not exist. Update with the correct directory." -ForegroundColor Red
@@ -19,7 +19,7 @@ if ((Get-Module -ListAvailable Azure) -eq $null)
 ## the commands
 #################################################################################
 CD $PATH_TO_SCRIPTS
-[xml] $ddpconfig = Get-Content "ClusterConfig Sample lara.xml"
+[xml] $ddpconfig = Get-Content "<Name of the config.xml file>"
 
 Select-AzureSubscription -SubscriptionName $ddpconfig.Cluster.SubscriptionName
 
@@ -78,7 +78,7 @@ for ($countsvc = 1; $countsvc -le $numCloudServices; $countsvc++)
 [int]$maxServicesCount = (Get-AzureSubscription -current -ExtendedDetails).MaxHostedServices
 [int]$currentServicesCount = (Get-AzureSubscription -current -ExtendedDetails).CurrentHostedServices
 
-If (($numCloudServices + $currentServicesCount + 1) -gt $maxServicesCount) 
+If (([int]$numCloudServices + [int]$currentServicesCount + 1) -gt $maxServicesCount) 
 {Write-Host "You will exceed the current maximum number of cloud services $maxServicesCount for the subscription. Either submit a ticket to increase the number of cloud services on the subscription or adjust the configuration of the cluster." -ForegroundColor Red}
 
 
@@ -112,7 +112,7 @@ foreach ($storageAccount in $storageAccountList)
 [int]$currentStorageAccountCount = (Get-AzureStorageAccount).Count 
 [int]$availableNow   = $maxStorageAccountCount - $currentStorageAccountCount 
 
-If ($storageAccountList.Count + $currentStorageAccountCount + 1 -gt $maxStorageAccountCount)
+If ($storageAccountList.Count + [int]$currentStorageAccountCount + 1 -gt $maxStorageAccountCount)
     {Write-Host "You will exceed the current maximum number of storage accounts $maxStorageAccountCount for the subscription. Either submit a ticket to increase the number of storage accounts on the subscription or adjust the configuration of the cluster." -ForegroundColor Red}
 
 

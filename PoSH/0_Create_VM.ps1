@@ -22,9 +22,9 @@ Distributed Data Platform on Azure Virtual Machines
                     -virtualSubnetname "App" `
                     -virtualNetworkName "DDP-Network" `
                     -storageAccountName "clustersa" `
-					-$storageAccountNameDisk "clustersa1" `
+					-storageAccountNameDisk "clustersa1" `
                     -cloudServiceName "clusternode" `
-                    -numofDisks 2 
+                    -numofDisks 2 `
 					-subscriptionName "MySubscription"
 
 ############################################################################################################>
