@@ -31,14 +31,14 @@ fi
 ## Set the account subscription
 ##############################################################
 printf "Update default subscription settings"
-azure account set $subscriptionName
+azure account set "$subscriptionName"
 
 ##############################################################
 ## Create affinity group if it does not exist
 ##############################################################
 printf "affinty group name is %s, affinity group location is %s\n" "$affinityGroupName" "$affinityGroupLocation"
 
-result=$(azure account affinity-group show "$affinityGroupName" --json | jq '.Name')   
+result=$(azure account affinity-group show "$affinityGroupName" --json | jq '.name')   
 if [[ -z $result ]]; then
 	(azure account affinity-group create --location "$affinityGroupLocation" --label "$affinityGroupLabel" --description "$affinityGroupDescription" "$affinityGroupName") || { echo "Failed to create affinity group $affinityGroupName"; exit 1; }
 else
@@ -54,7 +54,7 @@ azure account affinity-group show "$affinityGroupName" --json
 ##############################################################
 printf "storage account name is %s\n" "$storageAccountName"
 
-result=$(azure storage account show "$storageAccountName" --json | jq '.ServiceName')   
+result=$(azure storage account show "$storageAccountName" --json | jq '.name')   
 if [[ -z $result ]]; then
 	(azure storage account create --affinity-group "$affinityGroupName" --disable-geoReplication $storageAccountName) || { echo "Failed to create storage account $storageAccountName"; exit 1; }
 else
@@ -73,7 +73,7 @@ azure storage account show "$storageAccountName" --json
 ##############################################################
 for storageAccount in ${storageAccountList[@]} 
 do 
-result=$(azure storage account show "$storageAccount" --json | jq '.ServiceName') 
+result=$(azure storage account show "$storageAccount" --json | jq '.name') 
 if [[ -z $result ]]; then   
 (azure storage account create --affinity-group "$affinityGroupName" --disable-geoReplication $storageAccount) || { echo "Failed to create storage account $storageAccountName"; exit 1; }
 else
@@ -86,9 +86,9 @@ done
 ##############################################################
 printf "virtual network is %s, subnet is %s\n" "$vnetName" "$subnetName"
 
-result=$(azure network vnet show $vnetName --json | jq '.Name')   
+result=$(azure network vnet show $vnetName --json | jq '.name')   
 if [[ -z $result ]]; then
-	printf "Need to create virtual network %s\n" "$vnetName.  Please open the Azure Portal to create the virtual network. After the virtual network is created rerun the process."
+	printf "Virtual network %s\n" "$vnetName does not exist.  Please open the Azure Portal to create the virtual network. After the virtual network is created rerun the createagstoragevnet.sh process."
 #	(azure network vnet create --vnet $vnetName --location "$affinityGroupLocation" --address-space $vnetAddressSpace --cidr $vnetCidr --subnet-name $subnetName --subnet-start-ip $subnetAddressSpace --subnet-cidr $subnetCidr) || { echo "Failed to create virtual network $vnetName"; exit 1;}
 else
 	printf "Virtual network $virtualNetworkName exists\n"

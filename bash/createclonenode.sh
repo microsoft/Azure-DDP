@@ -30,7 +30,7 @@ cloudServiceName=$cloudServicePrefix
 dnsName=$cloudServiceName".cloudapp.net"
 
 #Check to see if the cloud servide already exists
-result=$(azure service show $cloudServiceName --json | jq '.ServiceName')
+result=$(azure service show $cloudServiceName --json | jq '.serviceName')
 if [[ -z $result ]]; then
         printf "Service does not exist. About to create cloud service:$cloudServiceName in affinity group:$affinityGroupName\n"
         (azure service create --affinitygroup "${affinityGroupName}" --serviceName $cloudServiceName) || { echo "Failed to create Cloud Service $cloudServiceName"; exit 1; }

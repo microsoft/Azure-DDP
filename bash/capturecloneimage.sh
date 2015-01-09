@@ -19,16 +19,17 @@ fi
 ##############################################################
 ## Capture the image of the clone virtual machine
 ##############################################################
-	#Check to see if the cloud servide already exists
-	result=$(azure vm image show $nodeImageName --json | jq '.ServiceName')
+
+	#Check to see if the image already exists
+	result=$(azure vm image show $cloneImageName --json | jq '.name')
 	if [[ -z $result ]]; then
 		vmSource=$vmNamePrefix"c"
-		printf "Capturing image $nodeImageName from virtual machine $vmSource\n"
-		azure vm shutdown $nodeImageName
+		printf "Capturing image $cloneImageName from virtual machine $vmSource\n"
+		azure vm shutdown $vmSource
 		azure vm capture --delete --label $cloneImageLabel $vmSource $cloneImageName
 	else
-		printf "Image $nodeImageName exists\n"
+		printf "Image $cloneImageName exists\n"
 	fi
 
 	printf "######################################## Clone Image Details #######################################\n"
-	azure vm image show $nodeImageName --json
+	azure vm image show $cloneImageName --json

@@ -41,7 +41,7 @@ do
 	## Create the cloud service if it does not exist
 	##############################################################
 	#Check to see if the cloud servide already exists
-	result=$(azure service show $cloudServiceName --json | jq '.ServiceName')
+	result=$(azure service show $cloudServiceName --json | jq '.serviceName')
 	if [[ -z $result ]]; then
         	printf "Service does not exist. About to create cloud service:$cloudServiceName in affinity group:$affinityGroupName\n"
         	(azure service create --affinitygroup "${affinityGroupName}" --serviceName $cloudServiceName) || { echo "Failed to create Cloud Service $cloudServiceName"; exit 1; }
@@ -67,6 +67,10 @@ do
 			azure vm disk attach-new --verbose $vmName $clusterdiskSizeInGB
 			let index=index+1
 		done
+		#set static ip
+		#get the ip address for the newly create virtual machine
+		ipaddress=$(azure vm show $vmName --json | jq '.IPAddress'| sed -e 's/\"//g')
+		azure vm static-ip set $vmName $ipaddress
 	else
 		printf "Virtual machine $vmName exists\n"
 	fi
@@ -81,7 +85,7 @@ do
 	printf "######################################## Virtual Machine Details #######################################\n"
 	#display the details about the newly created VM
 	ipaddress=$(azure vm show $vmName --json | jq '.IPAddress')
-	#remove the double quotes from the IP address
+	#remove the double quotes from the vm name and write to the hosts file and the mount disk file
 	echo "$ipaddress $vmName" | sed -e 's/\"//g' >> $hostsfile
 
 	countVM=$(( $countVM + 1 ))
