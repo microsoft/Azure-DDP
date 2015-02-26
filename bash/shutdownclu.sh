@@ -4,7 +4,7 @@ source ./clustersetup.sh
 countService=1
 cloudServiceName="$clustercloudServicePrefix$countService"
 
-vmlist=$(azure vm list -d mgddpclu11 --json | jq .[] | jq ."VMName")
+vmlist=$(azure vm list -d $cloudServiceName --json | jq .[] | jq ."VMName")
 vmlistclean=$(echo $vmlist | sed 's/\"//g')
 
 for i in $vmlistclean; do
