@@ -1,4 +1,5 @@
 #!/bin/bash
+#Shut down all cluster nodes
 source ./clustersetup.sh
 
 countService=1
