@@ -88,8 +88,8 @@ printf "virtual network is %s, subnet is %s\n" "$vnetName" "$subnetName"
 
 result=$(azure network vnet show $vnetName --json | jq '.name')   
 if [[ -z $result ]]; then
-	printf "Virtual network %s\n" "$vnetName does not exist.  Please open the Azure Portal to create the virtual network. After the virtual network is created rerun the createagstoragevnet.sh process."
-#	(azure network vnet create --vnet $vnetName --location "$affinityGroupLocation" --address-space $vnetAddressSpace --cidr $vnetCidr --subnet-name $subnetName --subnet-start-ip $subnetAddressSpace --subnet-cidr $subnetCidr) || { echo "Failed to create virtual network $vnetName"; exit 1;}
+	printf "Virtual network %s\n" "$vnetName does not exist."
+	(azure network vnet create --vnet $vnetName --location "$affinityGroupLocation" --address-space $vnetAddressSpace --cidr $vnetCidr --subnet-name $subnetName --subnet-start-ip $subnetAddressSpace --subnet-cidr $subnetCidr) || { echo "Failed to create virtual network $vnetName"; exit 1;}
 else
 	printf "Virtual network $virtualNetworkName exists\n"
 fi
