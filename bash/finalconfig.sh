@@ -1,3 +1,4 @@
+#!/bin/bash
 #On your management node logged in as root
 chmod 755 hostscript.sh
 chmod 755 updatehosts.sh
