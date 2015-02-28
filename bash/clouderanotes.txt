@@ -37,11 +37,11 @@
 	17. sh capturecloneimage.sh
 	18. sh createclusternodes.sh
 	19. Execute the following:
-	scp hosts.txt root@#.cloudapp.net:hosts.txt 
-	scp hostscript.sh root@#.cloudapp.net:hostscript.sh
-	scp updatehosts.sh root@#.cloudapp.net:updatehosts.sh
-	scp finalconfig.sh root@#.cloudapp.net:finalconfig.sh
-	scp clouderasetup.sh root@#.cloudapp.net:clouderasetup.sh
+		scp hosts.txt root@#.cloudapp.net:hosts.txt 
+		scp hostscript.sh root@#.cloudapp.net:hostscript.sh
+		scp updatehosts.sh root@#.cloudapp.net:updatehosts.sh
+		scp finalconfig.sh root@#.cloudapp.net:finalconfig.sh
+		scp clouderasetup.sh root@#.cloudapp.net:clouderasetup.sh
 	20. ssh root@#.cloudapp.net
 		a. sh finalconfig.sh
 		b. sh clouderasetup.sh
