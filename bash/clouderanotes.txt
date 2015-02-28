@@ -1,0 +1,48 @@
+	1. Install nodejs, npm, azure-cli
+	2. Download the publishsettings file.
+	3. Azure account import publishsettings
+	4. Clone the github repository
+	5. Edit the clustersetup.sh file with parameters.
+	6. sh preprovision.sh
+	7. ssh clusteradmin@#.cloudapp.net
+		a. sudo -s
+		b. passwd
+		c. exit
+	8. ssh clusteradmin@#.cloudapp.net -p 23
+		a. sudo -s
+		b. passwd
+		c. exit
+	9. ssh root@#.cloudapp.net
+		a. ssh-keygen
+		b. ssh-copy-id -i /root/.ssh/id_rsa.pub root@172.16.0.4
+		c. ssh-copy-id -i /root/.ssh/id_rsa.pub root@172.16.0.5
+		d. exit
+	10. scp makefilesystem.sh root@#.cloudapp.net:makefilesystem.sh
+	11. scp centosconfig.sh root@#.cloudapp.net:centosconfig.sh
+	12. scp -P 23 makefilesystem.sh root@#.cloudapp.net:makefilesystem.sh
+	13. scp -P 23 centosconfig.sh root@#.cloudapp.net:centosconfig.sh
+	14. ssh root@#.cloudapp.net
+		a. sh centosconfig.sh
+		b. Host will reboot
+	15. ssh root@#.cloudapp.net -p 23
+		a. sh centosconfig.sh
+		b. Host will reboot
+	16. ssh root@#.cloudapp.net -p 23
+		a. vi /etc/waagent.conf
+		b. Edit the following two lines to match with "n":
+			Provisioning.DeleteRootPassword=n
+			Provisioning.RegenerateSshHostKeyPair=n  
+		c. waagent -deprovision
+		d. exit
+	17. sh capturecloneimage.sh
+	18. sh createclusternodes.sh
+	19. Execute the following:
+	scp hosts.txt root@#.cloudapp.net:hosts.txt 
+	scp hostscript.sh root@#.cloudapp.net:hostscript.sh
+	scp updatehosts.sh root@#.cloudapp.net:updatehosts.sh
+	scp finalconfig.sh root@#.cloudapp.net:finalconfig.sh
+	scp clouderasetup.sh root@#.cloudapp.net:clouderasetup.sh
+	20. ssh root@#.cloudapp.net
+		a. sh finalconfig.sh
+		b. sh clouderasetup.sh
+	21. Navigate to http://#.cloudapp.net:7180
