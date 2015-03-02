@@ -1,48 +1,94 @@
+Prepare Development PC to provision to Azure
 	1. Install nodejs, npm, azure-cli
+		a. On Mac OS X Mavericks+ - Brew is required. To install brew, nodejs, npm, jq and the Azure CLI perform the following:
+			i. ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+			ii. brew update
+			iii. brew doctor
+			iv. brew install node
+			v. npm install -g azure-cli
+			vi. azure –v
+			vii. brew install jq
+		b. On Linux, install 
 	2. Download the publishsettings file.
-	3. Azure account import publishsettings
+		a. On your development PC, run the azure account download command to download your .publishsettings file from a browser.
+	3. Azure account import publishsettings.
 	4. Clone the github repository
-	5. Edit the clustersetup.sh file with parameters.
+		a. https://github.com/magaal/Azure-DDP/tree/patch-1/bash
+	5. Edit the clustersetup.sh file with parameters for your deployment
+		a. Edit lines:
+			i. 5 to match the name of your Azure subscription
+			ii. 13 & 14 to be any name you want
+			iii. 19 to be any name you want
+			iv. 29 and 30 - these must be globally unique
+			v. 34 - this must be globally unique
+			vi. 37 - this must be globally unique
+			vii. 38 & 39
+			viii. 54 for your VM size of management node
+			ix. 60 & 61 for size and number of disks to be attached to management node
+			x. 68 & 69 for the name of your worker node images
+			xi. 77 number of nodes in your cluster
+			xii. 83 - VM size of your worker nodes
+			xiii. 87, 88 number and size of persistent disks to attach to cluster nodes
+			xiv. 90, 91 - name of your cluster cloud services, must be unique
 	6. sh preprovision.sh
-	7. ssh clusteradmin@#.cloudapp.net
+
+Prepare the Nodes
+
+	1. ssh clusteradmin@#.cloudapp.net (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
 		a. sudo -s
 		b. passwd
 		c. exit
-	8. ssh clusteradmin@#.cloudapp.net -p 23
+	2. ssh clusteradmin@#.cloudapp.net -p 23 (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
 		a. sudo -s
 		b. passwd
 		c. exit
-	9. ssh root@#.cloudapp.net
+	3. ssh root@#.cloudapp.net (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
 		a. ssh-keygen
 		b. ssh-copy-id -i /root/.ssh/id_rsa.pub root@172.16.0.4
 		c. ssh-copy-id -i /root/.ssh/id_rsa.pub root@172.16.0.5
 		d. exit
-	10. scp makefilesystem.sh root@#.cloudapp.net:makefilesystem.sh
-	11. scp centosconfig.sh root@#.cloudapp.net:centosconfig.sh
-	12. scp -P 23 makefilesystem.sh root@#.cloudapp.net:makefilesystem.sh
-	13. scp -P 23 centosconfig.sh root@#.cloudapp.net:centosconfig.sh
-	14. ssh root@#.cloudapp.net
+	4. scp makefilesystem.sh root@#.cloudapp.net:makefilesystem.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
+	5. scp centosconfig.sh root@#.cloudapp.net:centosconfig.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
+	6. scp -P 23 makefilesystem.sh root@#.cloudapp.net:makefilesystem.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
+	7. scp -P 23 centosconfig.sh root@#.cloudapp.net:centosconfig.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
+	8. ssh root@#.cloudapp.net
 		a. sh centosconfig.sh
 		b. Host will reboot
-	15. ssh root@#.cloudapp.net -p 23
+	9. ssh root@#.cloudapp.net -p 23
 		a. sh centosconfig.sh
 		b. Host will reboot
-	16. ssh root@#.cloudapp.net -p 23
+	10. ssh root@#.cloudapp.net -p 23
 		a. vi /etc/waagent.conf
 		b. Edit the following two lines to match with "n":
 			Provisioning.DeleteRootPassword=n
 			Provisioning.RegenerateSshHostKeyPair=n  
 		c. waagent -deprovision
 		d. exit
-	17. sh capturecloneimage.sh
-	18. sh createclusternodes.sh
-	19. Execute the following:
-		scp hosts.txt root@#.cloudapp.net:hosts.txt 
-		scp hostscript.sh root@#.cloudapp.net:hostscript.sh
-		scp updatehosts.sh root@#.cloudapp.net:updatehosts.sh
-		scp finalconfig.sh root@#.cloudapp.net:finalconfig.sh
-		scp clouderasetup.sh root@#.cloudapp.net:clouderasetup.sh
-	20. ssh root@#.cloudapp.net
+
+Create Worker Node Clone Image
+
+	1. sh capturecloneimage.sh
+
+Create Cluster
+
+	1. sh createclusternodes.sh
+
+Initialize Cluster & Install Cloudera
+
+	1. Execute the following:
+	scp hosts.txt root@#.cloudapp.net:hosts.txt (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
+	scp hostscript.sh root@#.cloudapp.net:hostscript.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
+	scp updatehosts.sh root@#.cloudapp.net:updatehosts.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
+	scp finalconfig.sh root@#.cloudapp.net:finalconfig.sh(replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
+	scp clouderasetup.sh root@#.cloudapp.net:clouderasetup.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
+	2. ssh root@#.cloudapp.net (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
 		a. sh finalconfig.sh
 		b. sh clouderasetup.sh
-	21. Navigate to http://#.cloudapp.net:7180
+	3. Navigate to http://#.cloudapp.net:7180
+	4. Create your cluster with Core + Spark. Ensure you assign a Spark Gateway to a host.
+	5. IMPORTANT: On the cluster config pages, remove any mention of any volumes that begin with /mnt/resource, these are the temporary SSD disks and we do not want any Cloudera components installed there.
+
+Pausing and Resuming the Cluster
+
+	1. Execute sh shutdownclu.sh from your development PC to stop all worker nodes.
+	2. Execute sh startupclu.sh from your development PC to start all worker nodes.
