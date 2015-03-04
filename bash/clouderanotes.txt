@@ -76,11 +76,12 @@ Create Cluster
 Initialize Cluster & Install Cloudera
 
 	1. Execute the following:
+	scp clustersetup.sh root@#.cloudapp.net:clustersetup.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
 	scp hosts.txt root@#.cloudapp.net:hosts.txt (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
 	scp hostscript.sh root@#.cloudapp.net:hostscript.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
 	scp updatehosts.sh root@#.cloudapp.net:updatehosts.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
 	scp finalconfig.sh root@#.cloudapp.net:finalconfig.sh(replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
-	scp clouderasetup.sh root@#.cloudapp.net:clouderasetup.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
+	scp clouderainstall.sh root@#.cloudapp.net:clouderainstall.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
 	2. ssh root@#.cloudapp.net (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
 		a. sh finalconfig.sh
 		b. sh clouderasetup.sh
@@ -92,3 +93,12 @@ Pausing and Resuming the Cluster
 
 	1. Execute sh shutdownclu.sh from your development PC to stop all worker nodes.
 	2. Execute sh startupclu.sh from your development PC to start all worker nodes.
+	
+
+	
+	
+			
+	
+	
+		
+	
