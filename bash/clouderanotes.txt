@@ -88,6 +88,8 @@ Initialize Cluster & Install Cloudera
 	3. Navigate to http://#.cloudapp.net:7180
 	4. Create your cluster with Core + Spark. Ensure you assign a Spark Gateway to a host.
 	5. IMPORTANT: On the cluster config pages, remove any mention of any volumes that begin with /mnt/resource, these are the temporary SSD disks and we do not want any Cloudera components installed there.
+spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn --num-executors 4 /opt/cloudera/parcels/CDH/jars/spark-examples-*.jar  10000 1000
+
 
 Pausing and Resuming the Cluster
 
