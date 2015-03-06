@@ -76,13 +76,8 @@ Create Cluster
 Initialize Cluster & Install Cloudera
 
 	1. Execute the following:
-	scp clustersetup.sh root@#.cloudapp.net:clustersetup.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
-	scp hosts.txt root@#.cloudapp.net:hosts.txt (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
-	scp hostscript.sh root@#.cloudapp.net:hostscript.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
-	scp updatehosts.sh root@#.cloudapp.net:updatehosts.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
-	scp finalconfig.sh root@#.cloudapp.net:finalconfig.sh(replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
-	scp clouderainstall.sh root@#.cloudapp.net:clouderainstall.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
-	2. ssh root@#.cloudapp.net (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
+	scp clustersetup.sh hosts.txt hostscript.sh updatehosts.sh finalconfig.sh clouderainstall.sh root@#.cloudapp.net:~
+	2. ssh root@#.cloudapp.net
 		a. sh finalconfig.sh
 		b. sh clouderasetup.sh
 	3. Navigate to http://#.cloudapp.net:7180
