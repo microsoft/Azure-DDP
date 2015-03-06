@@ -17,4 +17,7 @@ echo never > /sys/kernel/mm/transparent_hugepage/enabled
 echo never > /sys/kernel/mm/redhat_transparent_hugepage/defrag
 echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled">>/etc/rc.local
 echo "echo never > /sys/kernel/mm/redhat_transparent_hugepage/defrag">>/etc/rc.local
-reboot now
+ip="$(ifconfig | grep -A 1 'eth0' | tail -1 | cut -d ':' -f 2 | cut -d ' ' -f 1)"
+if [ $ip = "172.16.0.4" ] ; then
+ reboot now
+fi
