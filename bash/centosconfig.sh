@@ -1,3 +1,4 @@
+cd /root
 mkdir /root/scripts
 mv makefilesystem.sh /root/scripts/makefilesystem.sh
 chmod 755 /root/scripts/makefilesystem.sh
