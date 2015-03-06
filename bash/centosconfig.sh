@@ -1,6 +1,5 @@
-cd /root
 mkdir /root/scripts
-mv makefilesystem.sh /root/scripts/makefilesystem.sh
+mv /root/makefilesystem.sh /root/scripts/makefilesystem.sh
 chmod 755 /root/scripts/makefilesystem.sh
 yum -y install dos2unix
 dos2unix /root/scripts/makefilesystem.sh /root/scripts/makefilesystem.sh
