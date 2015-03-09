@@ -79,5 +79,5 @@ fi
 
 #remove the double quotes from the vm name and write to the hosts file and the mount disk file
 echo "$ipaddress $vmName" | sed -e 's/\"//g' >> $hostsfile
-echo "ssh root@${vmName} /root/scripts/makefilesystem.sh" >> $mntscript
-echo "scp /etc/hosts root@${vmName}:/etc" >> $mntscript
+echo "ssh -o StrictHostKeyChecking=no root@${vmName} /root/scripts/makefilesystem.sh" >> $mntscript
+echo "scp -o StrictHostKeyChecking=no /etc/hosts root@${vmName}:/etc" >> $mntscript
