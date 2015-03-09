@@ -2,6 +2,7 @@
 #This script reads the hosts file and mergest its content with /etc/hosts
 
 source ./clustersetup.sh
+$hostsfile=/root/hosts.txt
 
 #check to make sure hosts file exists
 echo "hosts file name is:$hostsfile"
