@@ -38,32 +38,20 @@ Prepare the Nodes
 		a. sudo -s
 		b. passwd
 		c. exit
-	2. ssh clusteradmin@#.cloudapp.net -p 23 (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
+		d. exit
+	2. ssh clusteradmin@#.cloudapp.net -p 23 
 		a. sudo -s
 		b. passwd
 		c. exit
-	3. ssh root@#.cloudapp.net (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
+		d. exit
+	3. ssh root@#.cloudapp.net
 		a. ssh-keygen
 		b. ssh-copy-id -i /root/.ssh/id_rsa.pub root@172.16.0.4
 		c. ssh-copy-id -i /root/.ssh/id_rsa.pub root@172.16.0.5
 		d. exit
-	4. scp makefilesystem.sh root@#.cloudapp.net:makefilesystem.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
-	5. scp centosconfig.sh root@#.cloudapp.net:centosconfig.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
-	6. scp -P 23 makefilesystem.sh root@#.cloudapp.net:makefilesystem.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
-	7. scp -P 23 centosconfig.sh root@#.cloudapp.net:centosconfig.sh (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
-	8. ssh root@#.cloudapp.net
-		a. sh centosconfig.sh
-		b. Host will reboot
-	9. ssh root@#.cloudapp.net -p 23
-		a. sh centosconfig.sh
-		b. Host will reboot
-	10. ssh root@#.cloudapp.net -p 23
-		a. vi /etc/waagent.conf
-		b. Edit the following two lines to match with "n":
-			Provisioning.DeleteRootPassword=n
-			Provisioning.RegenerateSshHostKeyPair=n  
-		c. waagent -deprovision
-		d. exit
+	4. scp makefilesystem.sh root@#.cloudapp.net:~
+	5. scp -P 23 makefilesystem.sh root@#.cloudapp.net:~
+	6. sh precapture.sh
 
 Create Worker Node Clone Image
 
@@ -75,11 +63,8 @@ Create Cluster
 
 Initialize Cluster & Install Cloudera
 
-	1. Execute the following:
-	scp clustersetup.sh hosts.txt hostscript.sh updatehosts.sh finalconfig.sh clouderainstall.sh root@#.cloudapp.net:~
-	2. ssh root@#.cloudapp.net
-		a. sh finalconfig.sh
-		b. sh clouderasetup.sh
+	1. scp clustersetup.sh hosts.txt hostscript.sh updatehosts.sh root@#.cloudapp.net:~
+	2. sh provisioncluster.sh
 	3. Navigate to http://#.cloudapp.net:7180
 	4. Create your cluster with Core + Spark. Ensure you assign a Spark Gateway to a host.
 	5. IMPORTANT: On the cluster config pages, remove any mention of any volumes that begin with /mnt/resource, these are the temporary SSD disks and we do not want any Cloudera components installed there.
@@ -90,12 +75,3 @@ Pausing and Resuming the Cluster
 
 	1. Execute sh shutdownclu.sh from your development PC to stop all worker nodes.
 	2. Execute sh startupclu.sh from your development PC to start all worker nodes.
-	
-
-	
-	
-			
-	
-	
-		
-	
