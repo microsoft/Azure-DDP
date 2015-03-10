@@ -59,7 +59,7 @@ do
 
         printf "Virtual machine $vnName does not exist. Creating ...\n" 
 		#create the vm and attach data disks
-	(	azure vm create --connect --affinity-group $affinityGroupName --vm-size $clusterinstanceSize --vm-name $vmName --virtual-network-name $vnetName --subnet-names $subnetName $dnsName $cloneImageName $adminUserName $adminPassword) || { echo "Failed to create vm $vmName"; exit 1;}
+	(	azure vm create --connect --affinity-group $affinityGroupName --vm-size $clusterinstanceSize --vm-name $vmName --ssh $ssh --virtual-network-name $vnetName --subnet-names $subnetName $dnsName $cloneImageName $adminUserName $adminPassword) || { echo "Failed to create vm $vmName"; exit 1;}
 
 		#add all the necessary data disks
 		index=0
