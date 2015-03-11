@@ -43,8 +43,8 @@ do
 	#Check to see if the cloud servide already exists
 	result=$(azure service show $cloudServiceName --json | jq '.serviceName')
 	if [[ -z $result ]]; then
-        	printf "Service does not exist. About to create cloud service:$cloudServiceName in affinity group:$affinityGroupName\n"
-        	(azure service create --affinitygroup "${affinityGroupName}" --serviceName $cloudServiceName) || { echo "Failed to create Cloud Service $cloudServiceName"; exit 1; }
+        	printf "Service does not exist. About to create cloud service:$cloudServiceName in location:$affinityGroupLocation\n"
+        	(azure service create --location "$affinityGroupLocation" --serviceName $cloudServiceName) || { echo "Failed to create Cloud Service $cloudServiceName"; exit 1; }
 	else
 		printf "Cloud Service $cloudServiceName exists\n"
 	fi
@@ -59,7 +59,7 @@ do
 
         printf "Virtual machine $vnName does not exist. Creating ...\n" 
 		#create the vm and attach data disks
-	(	azure vm create --connect --affinity-group $affinityGroupName --vm-size $clusterinstanceSize --vm-name $vmName --ssh $ssh --virtual-network-name $vnetName --subnet-names $subnetName $dnsName $cloneImageName $adminUserName $adminPassword) || { echo "Failed to create vm $vmName"; exit 1;}
+	(	azure vm create --connect --vm-size $clusterinstanceSize --vm-name $vmName --ssh $ssh --virtual-network-name $vnetName --subnet-names $subnetName $dnsName $cloneImageName $adminUserName $adminPassword) || { echo "Failed to create vm $vmName"; exit 1;}
 
 		#add all the necessary data disks
 		index=0
