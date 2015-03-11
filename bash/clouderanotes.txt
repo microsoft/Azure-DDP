@@ -39,7 +39,7 @@ Prepare the Nodes
 		b. passwd
 		c. exit
 		d. exit
-	2. ssh clusteradmin@#.cloudapp.net -p 23 
+	2. ssh clusteradmin@#.cloudapp.net -p 23  (NOTE: you may have to wait an extra minute or so for this to be active after provisioning)
 		a. sudo -s
 		b. passwd
 		c. exit
