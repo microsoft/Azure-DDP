@@ -1,0 +1,77 @@
+Prepare Development PC to provision to Azure
+	1. Install nodejs, npm, azure-cli
+		a. On Mac OS X Mavericks+ - Brew is required. To install brew, nodejs, npm, jq and the Azure CLI perform the following:
+			i. ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+			ii. brew update
+			iii. brew doctor
+			iv. brew install node
+			v. npm install -g azure-cli
+			vi. azure –v
+			vii. brew install jq
+		b. On Linux, install 
+	2. Download the publishsettings file.
+		a. On your development PC, run the azure account download command to download your .publishsettings file from a browser.
+	3. Azure account import publishsettings.
+	4. Clone the github repository
+		a. https://github.com/magaal/Azure-DDP/tree/patch-1/bash
+	5. Edit the clustersetup.sh file with parameters for your deployment
+		a. Edit lines:
+			i. 5 to match the name of your Azure subscription
+			ii. 13 & 14 to be any name you want
+			iii. 19 to be any name you want
+			iv. 29 and 30 - these must be globally unique
+			v. 34 - this must be globally unique
+			vi. 37 - this must be globally unique
+			vii. 38 & 39
+			viii. 54 for your VM size of management node
+			ix. 60 & 61 for size and number of disks to be attached to management node
+			x. 68 & 69 for the name of your worker node images
+			xi. 77 number of nodes in your cluster
+			xii. 83 - VM size of your worker nodes
+			xiii. 87, 88 number and size of persistent disks to attach to cluster nodes
+			xiv. 90, 91 - name of your cluster cloud services, must be unique
+	6. sh preprovision.sh
+
+Prepare the Nodes
+
+	1. ssh clusteradmin@#.cloudapp.net (replace # with name of cloud service as above - this cloud service will be based on what you put for line 34 in clustersetup.sh)
+		a. sudo -s
+		b. passwd
+		c. exit
+		d. exit
+	2. ssh clusteradmin@#.cloudapp.net -p 23  (NOTE: you may have to wait an extra minute or so for this to be active after provisioning)
+		a. sudo -s
+		b. passwd
+		c. exit
+		d. exit
+	3. ssh root@#.cloudapp.net
+		a. ssh-keygen
+		b. ssh-copy-id -i /root/.ssh/id_rsa.pub root@172.16.0.4
+		c. ssh-copy-id -i /root/.ssh/id_rsa.pub root@172.16.0.5
+		d. exit
+	4. scp makefilesystem.sh root@#.cloudapp.net:~
+	5. scp -P 23 makefilesystem.sh root@#.cloudapp.net:~
+	6. sh precapture.sh
+
+Create Worker Node Clone Image
+
+	1. sh capturecloneimage.sh
+
+Create Cluster
+
+	1. sh createclusternodes.sh
+
+Initialize Cluster & Install Cloudera
+
+	1. scp clustersetup.sh hosts.txt hostscript.sh updatehosts.sh root@#.cloudapp.net:~
+	2. sh provisioncluster.sh
+	3. Navigate to http://#.cloudapp.net:7180
+	4. Create your cluster with Core + Spark. Ensure you assign a Spark Gateway to a host.
+	5. IMPORTANT: On the cluster config pages, remove any mention of any volumes that begin with /mnt/resource, these are the temporary SSD disks and we do not want any Cloudera components installed there.
+spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn --num-executors 4 /opt/cloudera/parcels/CDH/jars/spark-examples-*.jar  10000 1000
+
+
+Pausing and Resuming the Cluster
+
+	1. Execute sh shutdownclu.sh from your development PC to stop all worker nodes.
+	2. Execute sh startupclu.sh from your development PC to start all worker nodes.

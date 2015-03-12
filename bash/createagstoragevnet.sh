@@ -36,18 +36,18 @@ azure account set "$subscriptionName"
 ##############################################################
 ## Create affinity group if it does not exist
 ##############################################################
-printf "affinty group name is %s, affinity group location is %s\n" "$affinityGroupName" "$affinityGroupLocation"
+#printf "affinty group name is %s, affinity group location is %s\n" "$affinityGroupName" "$affinityGroupLocation"
 
-result=$(azure account affinity-group show "$affinityGroupName" --json | jq '.name')   
-if [[ -z $result ]]; then
-	(azure account affinity-group create --location "$affinityGroupLocation" --label "$affinityGroupLabel" --description "$affinityGroupDescription" "$affinityGroupName") || { echo "Failed to create affinity group $affinityGroupName"; exit 1; }
-else
-	echo "affinity group $affinityGroupName exists"
-fi
+#result=$(azure account affinity-group show "$affinityGroupName" --json | jq '.name')   
+#if [[ -z $result ]]; then
+#	(azure account affinity-group create --location "$affinityGroupLocation" --label "$affinityGroupLabel" --description "$affinityGroupDescription" "$affinityGroupName") || { echo "Failed to create affinity group $affinityGroupName"; exit 1; }
+#else
+#	echo "affinity group $affinityGroupName exists"
+#fi
 
 #show the affinity group details
-printf "######################################## Affinity Group Details #######################################\n"
-azure account affinity-group show "$affinityGroupName" --json
+#printf "######################################## Affinity Group Details #######################################\n"
+#azure account affinity-group show "$affinityGroupName" --json
 
 ##############################################################
 ## Create the primary storage account if it does not exist
@@ -56,7 +56,7 @@ printf "storage account name is %s\n" "$storageAccountName"
 
 result=$(azure storage account show "$storageAccountName" --json | jq '.name')   
 if [[ -z $result ]]; then
-	(azure storage account create --affinity-group "$affinityGroupName" --disable-geoReplication $storageAccountName) || { echo "Failed to create storage account $storageAccountName"; exit 1; }
+	(azure storage account create --location "$affinityGroupLocation" --disable-geoReplication $storageAccountName) || { echo "Failed to create storage account $storageAccountName"; exit 1; }
 else
 	echo "Storage account $storageAccountName exists"
 fi
@@ -75,7 +75,7 @@ for storageAccount in ${storageAccountList[@]}
 do 
 result=$(azure storage account show "$storageAccount" --json | jq '.name') 
 if [[ -z $result ]]; then   
-(azure storage account create --affinity-group "$affinityGroupName" --disable-geoReplication $storageAccount) || { echo "Failed to create storage account $storageAccountName"; exit 1; }
+(azure storage account create --location "$affinityGroupLocation" --disable-geoReplication $storageAccount) || { echo "Failed to create storage account $storageAccountName"; exit 1; }
 else
 	echo "Storage account $storageAccount exists"
 fi
@@ -88,8 +88,8 @@ printf "virtual network is %s, subnet is %s\n" "$vnetName" "$subnetName"
 
 result=$(azure network vnet show $vnetName --json | jq '.name')   
 if [[ -z $result ]]; then
-	printf "Virtual network %s\n" "$vnetName does not exist.  Please open the Azure Portal to create the virtual network. After the virtual network is created rerun the createagstoragevnet.sh process."
-#	(azure network vnet create --vnet $vnetName --location "$affinityGroupLocation" --address-space $vnetAddressSpace --cidr $vnetCidr --subnet-name $subnetName --subnet-start-ip $subnetAddressSpace --subnet-cidr $subnetCidr) || { echo "Failed to create virtual network $vnetName"; exit 1;}
+	printf "Virtual network %s\n" "$vnetName does not exist."
+	(azure network vnet create --vnet $vnetName --location "$affinityGroupLocation" --address-space $vnetAddressSpace --cidr $vnetCidr --subnet-name $subnetName --subnet-start-ip $subnetAddressSpace --subnet-cidr $subnetCidr) || { echo "Failed to create virtual network $vnetName"; exit 1;}
 else
 	printf "Virtual network $virtualNetworkName exists\n"
 fi
